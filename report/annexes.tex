@@ -1,0 +1,107 @@
+\section{Annexes}
+
+\begin{figure}[!h]
+\begin{tikzpicture}[->, >=stealth', shorten >= 1pt, auto, node distance=2.8cm, semithick]
+
+\tikzstyle{every state}=[fill=red]
+
+\node [initial, state] (A) {$q_{bad}$};
+
+\end{tikzpicture}
+\caption{supp\_final\_init}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[!h]
+\begin{tikzpicture}[->, >=stealth', shorten >= 1pt, auto, node distance=2.8cm, semithick]
+
+\tikzstyle{every initial}=[fill=green, draw=none]
+
+\node [initial, state] (A) [fill = green]           {$q_0$};
+\node [state]          (B) [right of=A]             {$q_1$};
+\node [state]          (C) [fill = red, right of=B] {$q_{bad}$};
+
+\path (A) edge              node {$x := 1$}   (B)
+      (B) edge [loop above] node {$skip$} (B)
+      (B) edge              node {$x == 0$}   (C);
+
+\end{tikzpicture}
+\caption{supp\_loop\_not\_sat}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[!h]
+\begin{tikzpicture}[->, >=stealth', shorten >= 1pt, auto, node distance=2.8cm, semithick]
+
+\tikzstyle{every initial}=[fill=green, draw=none, text=white]
+
+\node [initial, state] (A) [fill = green]            {$q_0$};
+\node [state]          (B) [right of=A]              {$q_1$};
+\node [state]          (C) [right of=B]              {$q_2$};
+\node [state]          (D) [right of=C]              {$q_3$};
+\node [state]          (E) [fill = red, right of=D]  {$q_{bad}$};
+
+\path ([yshift=0.1cm]A.east) edge node [below=5pt]{$x <= 3$}    ([yshift=0.1cm]B.west)
+      ([yshift=-0.1cm]A.east) edge node [above=5pt]{$x <= 8$}    ([yshift=-0.1cm]B.west)
+      ([yshift=0.1cm]B.east) edge node [below=5pt]{$x <= 4$}    ([yshift=0.1cm]C.west)
+      ([yshift=-0.1cm]B.east) edge node [above=5pt]{$x <= 9$}    ([yshift=-0.1cm]C.west)
+      ([yshift=0.1cm]C.east) edge node [below=5pt]{$x <= 5$}    ([yshift=0.1cm]D.west)
+      ([yshift=-0.1cm]C.east) edge node [above=5pt]{$x <= 10$}   ([yshift=-0.1cm]D.west);
+
+\end{tikzpicture}
+\caption{supp\_no\_final}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[!h]
+\begin{tikzpicture}[->, >=stealth', shorten >= 1pt, auto, node distance=2.8cm, semithick]
+
+\node [initial, state] (A) [fill = green, right of=B] {$q_0$};
+\node [state]          (B) [right of=A] {$q_1$};
+\node [state]          (C) [fill = red, right of=B] {$q_{bad}$};
+
+\path (A) edge              node {$x := 9$}   (B)
+      (B) edge [loop above] node {$x := x - 1$} (B)
+      (B) edge              node {$x == 0$}   (C);
+
+\end{tikzpicture}
+\caption{supp\_over\_bound}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[!h]
+\begin{tikzpicture}[->, >=stealth', shorten >= 1pt, auto, node distance=2.8cm, semithick]
+
+\node [initial, state] (A) [fill = green]           {$q_0$};
+\node [state]          (B) [right of=A]             {$q_1$};
+\node [state]          (C) [fill = red, right of=B] {$q_{bad}$};
+
+\path (A) edge              node {$x := 6$}     (B)
+      (B) edge [loop above] node {$x := x - 1$} (B)
+      (B) edge              node {$x == 0$}     (C)
+      (C) edge [loop above] node {$x := x + 1$} (C);
+
+\end{tikzpicture}
+\caption{supp\_simple\_final\_loop}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[!h]
+\begin{tikzpicture}[->, >=stealth', shorten >= 1pt, auto, node distance=2.8cm, semithick]
+
+\node [initial, state] (A) [fill = green, right of=B] {$q_0$};
+\node [state]          (B) [right of=A] {$q_1$};
+\node [state]          (C) [fill = red, right of=B] {$q_{bad}$};
+
+\path (A) edge              node {$x := 8$}   (B)
+      (B) edge [loop above] node {$x := x - 1$} (B)
+      (B) edge              node {$x == 0$}   (C);
+
+\end{tikzpicture}
+\caption{supp\_under\_bound}
+\end{figure}

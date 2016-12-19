@@ -1,0 +1,58 @@
+		   Software Verification (Homework)
+		   ================================
+
+
+Homework archive
+----------------
+The archive encloses a skeleton of your project with:
+
+- This README file.
+
+- A description of the project in 'homework.pdf'.
+
+- The '.mli' files that define the API of the whole project.
+  Run 'make doc' to generate the HTML documentation of the
+  modules and visit './doc/index.html' with a web browser to
+  look at it.
+
+- A few '.ml' files (implemented modules) to provide you functions to
+  help you to focus on the heart of the program (look at it and use it
+  to save time!).
+
+- An example usage of the Z3 OCaml API in the file 'z3_ml_example.ml'.
+  Compile it with 'make z3_ml_example.byte'.
+
+- Once your have implemented enough of the two missing modules (see
+  below), you can try to compile the whole thing with: 'make'.  You
+  can also run a few unit tests with 'make test'.
+
+- A binary program 'bmc.d.byte' to give you a taste of the final
+  model-checking program that you should obtain.
+
+
+What to code
+------------
+You need to implement the following OCaml modules:
+
+- 'Semantics.ml': Translate the operators of the program
+  into Z3 expressions in the integer theory module.
+
+- 'BoundedModelChecking.ml': Explore all the feasible paths in
+  depth-first search with a bounded depth. And, returns the result of
+  the exploration.
+
+
+How and when to send your homework
+----------------------------------
+The deadline for the project is on Friday, December 16, 2016 at 14h00.
+Send an archive with your full project to gregoire.sutre@labri.fr.
+
+Your archive should contain the whole project plus:
+
+- The 'Semantics.ml' and the 'BoundedModelChecking.ml' modules fully
+  implemented.
+
+- A few extra tests for the implemented modules.
+
+- A report (written in LaTeX but sent as a PDF file) about your
+  implementation and the choices that you had to do while programming.

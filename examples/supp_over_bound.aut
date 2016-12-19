@@ -1,0 +1,14 @@
+Over_bound
+{
+    var x;
+
+    initial q_0;
+    final q_bad;
+
+    from q_0
+    | x := 9 --> q_1;
+
+    from q_1
+    | x:= x-1 --> q_1;
+    | x==0 --> q_bad;
+}

@@ -1,0 +1,7 @@
+Final_init
+{
+    var x;
+
+    initial q_bad;
+    final q_bad;
+}

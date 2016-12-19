@@ -1,0 +1,14 @@
+Loop_no_sat
+{
+    var x;
+
+    initial q_0;
+    final q_bad;
+
+    from q_0
+    | x := 5 --> q_1;
+
+    from q_1
+    | skip --> q_1;
+    | x==0 --> q_bad;
+}

@@ -1,0 +1,25 @@
+# $Id: _tags 4095 2016-11-14 14:39:56Z sutre $
+
+# Source directories
+<src>: include
+<test>: include
+<test/lib>: include
+
+# Required libraries
+true: package(z3)
+<test/runtests.*>: use_str
+
+# Force -custom to work around z3's incorrect META file
+<**/*.byte>: custom
+
+# Code optimization for native-code compilation
+<**/*.cmx>: noassert, unsafe, inline(100)
+
+# Type annotations
+<**/*.ml>: annot
+
+# Enable all warnings except warning 44 (open statement shadows ...) by default
+<**/*.ml>: warn_A, warn_-44
+
+# Disable warning 4 (fragile pattern matching) for the generated parser
+"src/AutParser.ml": warn_-4

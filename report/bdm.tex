@@ -1,0 +1,44 @@
+\section{Bounded Model Checking}
+
+\subsection{Implémentation choisie}
+
+Au vu des tests effectués, l'implémentation effectuée semble fonctionner, bien que celle-ci ne respecte totalement le paradigme fonctionnel: pour y remédier, il faudrait restructurer la fonction \textit{dfs}.\\
+
+Le module se compose donc de 2 fonctions: \textit{search} et \textit{dfs}. \textit{Search} est la fonction principale et le point d'entrée de ce module. Il ne prend en entrée que l'automate et la profondeur maximale désirée pour le parcourir. Quand à la fonction \textit{dfs}, celle-ci représente le coeur du module: c'est dans cette fonction que tout va se passer.\\
+
+La fonction \textit{dfs} peut donc se découper en plusieurs parties:
+
+\begin{enumerate}
+\item{Test de la profondeur actuel dans l'automate entier;}
+\item{Définition du noeud actuel;}
+\item{Définition du \textit{result} actuel, en fonction du type de node et de la réponse donnée par la résolution de la formule dans le solveur;}
+\item{Partie récursive de la fonction. Va appliquer une fonction (définie à la volée) à l'ensemble des couples (transitions, noeud suivant) succédant le noeud actuel, et ce, à l'aide d'un \textbf{List.fold\_left}. Cette fonction, en fonction du résultat du sous-arbre précédemment parcouru, empilera la transition du tuple sur lequel elle s'applique puis appellera récursivement \textit{dfs} afin de connaître le type de \textit{result} des sous-arbres issus de la node étudiée et d'en renvoyer un résultat associé.\\}
+\end{enumerate}
+
+Afin de garder trace du chemin effectué à chacun des parcours, une liste est passée à chaque fois en paramètre. Celle-ci contiendra toujours, en en-tête, un couple représentant la dernière transition effectuée et le noeud actuel.\\
+Aussi, il est important de différencier les \textbf{Empty true} des \textbf{Empty false}: c'est pour cela que l'astuce d'un \& booléen sera utilisé.
+
+
+\subsection{Tests ajoutés}
+
+Les tests ajoutés se situent dans le dossier \textbf{examples}, avec ceux déjà fournis. Le script \textbf{.test\_all} applique l'exécutable sur tous les tests présents dans ce dossier. Mais les résultats n'ayant pas été rentrés à la main, on ne peut vérifier, à la volée, la véracité des résultats obtenus sur chacun des tests. Il reste donc la vérification automatique pour chacun des tests à implémenter.\\
+
+En ce qui concerne les tests en eux-mêmes, les noms des tests supplémentaires sont précédés de \textit{supp\_}.
+Voici une liste de ceux qui ont été ajoutés:
+
+\begin{itemize}
+\item[$\bullet$]{\textbf{final\_init}: représente un automate n'ayant qu'un seul état, initial et final, sans aucune transition;}
+\item[$\bullet$]{\textbf{loop\_no\_sat}: représente présentant une initialisation puis une boucle sur lui-même sans aucune opération (\textit{skip}) et un test impossible à réaliser pour atteindre l'état final;}
+\item[$\bullet$]{\textbf{neg}: représente un automate décrémentant infiniment dont la valeur \textit{x} commence négativement et où le test pour atteindre l'état final est une égalité à 0;}
+\item[$\bullet$]{\textbf{no\_final}: représente un automate où l'état final n'est pas atteignable: aucune transition ne le rejoint;}
+\item[$\bullet$]{\textbf{over\_bound}: représente un automate nécessitant 11 étapes afin d'atteindre l'état final;}
+\item[$\bullet$]{\textbf{simple\_final\_loop}: représente un automate simple mais avec une boucle sur l'état final;}
+\item[$\bullet$]{\textbf{under\_bound}: représente un automate nécessitant 10 étapes afin d'atteindre l'état final.\\}
+\end{itemize}
+
+Vous pouvez retrouver les représentations de ces graphes en annexes.\\
+
+Certains de ces tests ont des utilités spécifiques.\\
+Ainsi, les tests \textbf{over\_bound} et \textbf{under\_bound} permettent de tester précisément la partie de détection de la profondeur maximale. Il est important de noter que bien que la valeur de \textit{x} soit initialisée à 8, il faut compter 8 décrémentation, 1 transition pour sortir de l'état initial et 1 autre pour arriver à l'état final.\\
+De même, le test \textbf{simple\_final\_loop} permet de vérifier que le chemin renvoyé est bien le premier chemin trouvé, et ce, grâce à la boucle sur l'état final.\\
+Enfin, le test \textbf{final\_init} permet de vérifier que même dans le cas particulier d'un état initial et final à la fois, on retrouve bien un chemin (vide). Tout comme le test \textbf{no\_final} qui ne peut renvoyer de chemin car l'état final n'est pas atteignable. Ce dernier aura aussi été utilisé pour vérifier que le bdm essaie bien tous les chemins possibles, en affichant les diffèrents états du solveur à chacune des étapes avec \textit{"Format.printf \"\@[Solver state \%s\@]\@.\" (Solver.to\_string solv)"}.

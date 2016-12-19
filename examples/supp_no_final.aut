@@ -1,0 +1,18 @@
+No_final {
+    var x;
+
+    initial q_0;
+    final q_bad;
+
+    from q_0
+    | x <= 3 --> q_1;
+    | x <= 8 --> q_1;
+
+    from q_1
+    | x <= 4 --> q_2;
+    | x <= 9 --> q_2;
+
+    from q_2
+    | x <= 5 --> q_3;
+    | x <= 10 --> q_3;
+}

@@ -1,0 +1,38 @@
+\section{Semantics}
+
+\subsection{Implémentation choisie}
+
+Le module \textit{Semantics} est découpé en plusieurs fonctions:
+\begin{itemize}
+\item[$\bullet$] {\textbf{matching\_expression} pour parser les \textit{expressions};}
+\item[$\bullet$] {\textbf{matching\_predicate} pour parser les \textit{predicates};}
+\item[$\bullet$] {\textbf{assign}, \textbf{keepargs} \& \textbf{keepargs\_except} pour la conservation des valeurs des variables;}
+\item[$\bullet$] {\textbf{formula}, point d'entrée du module \textit{Semantics} qui se chargera des \textit{assignations}, des \textit{skips} et des \textit{guards}.}\\
+\end{itemize}
+
+L'implémentation de la division par 0 aura entraîné une refonte de l'architecture du module. En effet, celle-ci crée une restriction supplémentaire à prendre en compte: les opérations en dénominateur doivent être différentes de 0.\\
+Pour ne pas perdre d'informations, les retours de fonctions ne seront plus de la forme \textit{Z3.Expr.expr} mais des tuples de la forme (\textit{Z3.Expr.expr}, \textit{Z3.Expr.expr list}). Le deuxième paramètre représentera les contraintes sur les divisions.
+
+Aussi, concernant la division, on peut noter que les simplifications (comme le produit en croix pour les divisions) lors de la construction de la séquence d'opérations ne sont pas implémentées.
+
+\subsection{Tests ajoutés}
+
+Les tests ajoutés pour la partie \textit{Semantics} sont présents dans le fichier \textit{Test\_Semantics.ml}. Ceux-ci sont basés sur ceux déjà présents et ne font que tester les combinaisons d'\textit{Opérations}. Les tests sont effectués automatiquement à l'aide de la commande \textbf{make test} et, afin des les distinguer de ceux déjà fournis, leur nom est précédé du terme \textit{``supp\_''}.\\
+
+Quelques tests implémentés pour les \textit{assign}:
+
+\begin{equation*}
+  \begin{aligned}
+    z = \frac{x + 3}{y},\ z = \frac{x + 3}{\frac{y}{z - 4}}
+  \end{aligned}
+\end{equation*}
+
+Ainsi que pour les \textit{guard}:
+
+\begin{equation*}
+  \begin{aligned}
+    \frac{x + 5}{z} > \frac{y}{z},\ \frac{x - 5}{z} < \frac{y}{z + y}
+  \end{aligned}
+\end{equation*}
+
+Bien évidemment, aucun nouveau test n'a été effectué pour la partie \textit{skip}.
